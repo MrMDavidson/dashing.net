@@ -14,12 +14,14 @@
 
   Batman.version = '0.13.0';
 
+  var injectedPaths = BatmanPathService.getPaths();
+
   Batman.config = {
-    pathPrefix: '/',
-    viewPrefix: 'views',
-    fetchRemoteViews: true,
-    usePushState: false,
-    minificationErrors: true
+      pathPrefix: injectedPaths.BasePath,
+      viewPrefix: injectedPaths.ViewPath,
+      fetchRemoteViews: true,
+      usePushState: false,
+      minificationErrors: true
   };
 
   (Batman.container = (function() {

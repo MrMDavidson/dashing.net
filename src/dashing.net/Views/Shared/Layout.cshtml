@@ -11,6 +11,17 @@
     
     <title>dashing.net</title>
     
+    <script>
+    BatmanPathService = {};
+    BatmanPathService.getPaths = function () {
+        return {
+            ViewPath: '@string.Format("{0}/views", HttpRuntime.AppDomainAppVirtualPath)',
+            BasePath: '@string.Format("{0}/", HttpRuntime.AppDomainAppVirtualPath)',
+            EventsPath: '@string.Format("{0}/api/events", HttpRuntime.AppDomainAppVirtualPath)'
+        };
+    };
+    </script>
+
     @Scripts.Render("~/bundles/application-js")
     @Styles.Render("~/bundles/application-css")
 

@@ -34,19 +34,19 @@ namespace dashing.net
 
         private void RerouteWidgetRequest()
         {
-            var url = Request.Path.ToLower();
-            
-            if (url.StartsWith("/views/") && url.EndsWith(".html"))
-            {
-                var widget = url.Split(new[] {'/'}).Last().Split(new[] {'.'}).First();
+            string url = Request.Path.ToLower();
+            string baseViewPath = string.Format("{0}/views/", HttpRuntime.AppDomainAppVirtualPath);
+
+            if (string.Compare(url, baseViewPath, StringComparison.InvariantCultureIgnoreCase) > 0 && (url.EndsWith(".html") == true)) {
+                var widget = url.Split(new[] { '/' }).Last().Split(new[] { '.' }).First();
 
                 //check if there is a widget under that name in the widgets directory
-                if (File.Exists(Server.MapPath(string.Format("~/Widgets/{0}/{0}.html", widget))))
-                {
+                if (File.Exists(Server.MapPath(string.Format("~/Widgets/{0}/{0}.html", widget)))) {
                     var context = HttpContext.Current;
                     context.RewritePath(string.Format("~/Widgets/{0}/{0}.html", widget));
                 }
             }
+
         }
 
         /// <summary>

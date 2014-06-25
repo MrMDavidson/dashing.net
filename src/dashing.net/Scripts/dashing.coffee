@@ -89,7 +89,7 @@ Dashing.widgets = widgets = {}
 Dashing.lastEvents = lastEvents = {}
 Dashing.debugMode = true
 
-source = new EventSource('/api/events')
+source = new EventSource(BatmanPathService.getPaths().EventsPath)
 source.addEventListener 'open', (e) ->
   console.log("Connection opened")
 
