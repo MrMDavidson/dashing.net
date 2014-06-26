@@ -16,11 +16,11 @@ namespace dashing.net.App_Start
                 .Include("~/Scripts/batman.js")
                 .Include("~/Scripts/batman.jquery.js")
                 .Include("~/Scripts/dashing.coffee")
-                .Include("~/Scripts/gridster/jquery.leanModal.min.js")
+                .Include("~/Scripts/jquery.leanModal.min.js")
                 .Include("~/Scripts/jquery.knob.js")
                 .Include("~/Scripts/d3.v2.min.js")
                 .Include("~/Scripts/rickshaw.min.js")
-                .Include("~/Scripts/gridster/jquery.gridster.js")
+                .Include("~/Scripts/jquery.gridster.js")
                 .Include("~/Scripts/dashing.gridster.coffee")
                 .IncludeDirectory("~/Widgets", "*.coffee", true)
                 .Include("~/Scripts/application.coffee");
