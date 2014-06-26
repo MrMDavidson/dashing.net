@@ -16,13 +16,37 @@ namespace dashing.net.Infrastructure
 
             foreach (var fileInfo in response.Files)
             {
-                if (fileInfo.Extension.Equals(".sass", StringComparison.Ordinal) || fileInfo.Extension.Equals(".scss", StringComparison.Ordinal))
+                if (fileInfo.VirtualFile.Name.EndsWith(".sass", StringComparison.Ordinal) || fileInfo.VirtualFile.Name.EndsWith(".scss", StringComparison.Ordinal))
                 {
-                    response.Content += compiler.Compile(fileInfo.FullName, false, new List<string>());
+                    string path = Path.Combine(context.HttpContext.Server.MapPath("~/Temp"), Path.GetTempFileName());
+                    try
+                    {
+
+                        using (Stream dest = File.OpenWrite(path))
+                        {
+                            using (Stream source = fileInfo.VirtualFile.Open())
+                            {
+                                source.CopyTo(dest);
+                            }
+                        }
+
+                        response.Content += compiler.Compile(path, false, new List<string>());
+                    }
+                    finally
+                    {
+                        if (File.Exists(path) == true)
+                        {
+                            File.Delete(path);
+                        }
+                    }
                 }
-                else if (fileInfo.Extension.Equals(".css", StringComparison.Ordinal))
+                else if (fileInfo.VirtualFile.Name.EndsWith(".css", StringComparison.Ordinal))
                 {
-                    response.Content += File.ReadAllText(fileInfo.FullName);
+                    using (Stream stream = fileInfo.VirtualFile.Open())
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        response.Content += reader.ReadToEnd();
+                    }
                 }
             }
 

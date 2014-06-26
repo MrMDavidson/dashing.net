@@ -15,15 +15,22 @@ namespace dashing.net.Infrastructure
 
             foreach (var fileInfo in response.Files)
             {
-                if (fileInfo.Extension.Equals(".coffee", StringComparison.Ordinal))
+                if (fileInfo.VirtualFile.Name.EndsWith(".coffee", StringComparison.Ordinal))
                 {
-                    var result = coffee.Compile(File.ReadAllText(fileInfo.FullName));
-
-                    response.Content += result;
+                    using (Stream stream = fileInfo.VirtualFile.Open())
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        var result = coffee.Compile(reader.ReadToEnd());
+                        response.Content += result;
+                    }
                 }
-                else if (fileInfo.Extension.Equals(".js", StringComparison.Ordinal))
+                else if (fileInfo.VirtualFile.Name.EndsWith(".js", StringComparison.Ordinal))
                 {
-                    response.Content += File.ReadAllText(fileInfo.FullName);
+                    using (Stream stream = fileInfo.VirtualFile.Open())
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        response.Content += reader.ReadToEnd();
+                    }
                 }
             }
         }

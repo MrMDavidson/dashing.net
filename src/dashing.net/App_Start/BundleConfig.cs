@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 using dashing.net.Infrastructure;
 
 namespace dashing.net.App_Start
@@ -11,8 +7,11 @@ namespace dashing.net.App_Start
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            var application = new ScriptBundle("~/bundles/application-js")
-                .Include("~/Scripts/jquery-1.9.1.js")
+            //var application = new ScriptBundle("~/bundles/application-js")
+            var application = new Bundle("~/bundles/application-js")
+                .Include("~/Scripts/jquery-1.11.1.js")
+                .Include("~/Scripts/jquery.signalR-2.1.0.js")
+                .Include("~/Scripts/SignalRHubs.js")
                 .Include("~/Scripts/es5-shim.js")
                 .Include("~/Scripts/batman.js")
                 .Include("~/Scripts/batman.jquery.js")
@@ -25,7 +24,7 @@ namespace dashing.net.App_Start
                 .Include("~/Scripts/dashing.gridster.coffee")
                 .IncludeDirectory("~/Widgets", "*.coffee", true)
                 .Include("~/Scripts/application.coffee");
-                            
+            application.EnableFileExtensionReplacements = false;
             application.Transforms.Add(new CoffeeTransform());
             bundles.Add(application);
 

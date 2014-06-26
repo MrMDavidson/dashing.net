@@ -89,25 +89,44 @@ Dashing.widgets = widgets = {}
 Dashing.lastEvents = lastEvents = {}
 Dashing.debugMode = true
 
-source = new EventSource(BatmanPathService.getPaths().EventsPath)
-source.addEventListener 'open', (e) ->
-  console.log("Connection opened")
+$.connection.hub.logging = true
+eventHub = $.connection.eventsController
 
-source.addEventListener 'error', (e)->
-  console.log("Connection error")
-  if (e.readyState == EventSource.CLOSED)
-    console.log("Connection closed")
-
-source.addEventListener 'message', (e) =>
-  data = JSON.parse(e.data)
+eventHub.client.sendMessage = (e) =>
+  data = JSON.parse(e)
   if lastEvents[data.id]?.updatedAt != data.updatedAt
     if Dashing.debugMode
       console.log("Received data for #{data.id}", data)
     lastEvents[data.id] = data
     if widgets[data.id]?.length > 0
       for widget in widgets[data.id]
-        widget.receiveData(data)
+        widget.receiveData(data)   
 
+hub = $.connection.hub.start()
+hub.done ->
+    console.log("Connection opened")
+hub.fail ->
+    console.log("Connection error")    
+
+
+#source = new EventSource(BatmanPathService.getPaths().EventsPath)
+#source.addEventListener 'open', (e) ->
+#  console.log("Connection opened")
+#
+#source.addEventListener 'error', (e)->
+#  console.log("Connection error")
+#  if (e.readyState == EventSource.CLOSED)
+#    console.log("Connection closed")
+#
+#source.addEventListener 'message', (e) =>
+#  data = JSON.parse(e.data)
+#  if lastEvents[data.id]?.updatedAt != data.updatedAt
+#    if Dashing.debugMode
+#      console.log("Received data for #{data.id}", data)
+#    lastEvents[data.id] = data
+#    if widgets[data.id]?.length > 0
+#      for widget in widgets[data.id]
+#        widget.receiveData(data)
 
 $(document).ready ->
   Dashing.run()
