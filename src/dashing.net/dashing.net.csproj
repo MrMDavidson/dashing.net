@@ -229,6 +229,7 @@
     <Content Include="Scripts\dashing.coffee" />
     <Content Include="Scripts\SignalRHubs.js" />
     <Content Include="Views\Error\404.html" />
+    <Content Include="Widgets\service_status\service_status.html" />
     <Content Include="Widgets\clock\clock.html" />
     <Content Include="Widgets\comments\comments.html" />
     <Content Include="Widgets\graph\graph.html" />
@@ -267,6 +268,8 @@
     <Content Include="Widgets\text\text.coffee" />
     <Content Include="Widgets\text\text.scss" />
     <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Widgets\service_status\service_status.coffee" />
+    <Content Include="Widgets\service_status\service_status.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

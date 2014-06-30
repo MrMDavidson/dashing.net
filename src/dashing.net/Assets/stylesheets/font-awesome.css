@@ -301,3 +301,6 @@ li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before {
 .icon-paste:before                { content: "\f0ea"; }
 
 .icon-user-md:before              { content: "\f200"; }
+
+.icon-check-circle-o:before       { content: "\f05d"; }
+.icon-chain-broken:before         { content: "\f127"; }
